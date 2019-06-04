@@ -133,3 +133,35 @@ function printcontributionreceipt_civicrm_alterSettingsFolders(&$metaDataFolders
 function printcontributionreceipt_civicrm_entityTypes(&$entityTypes) {
   _printcontributionreceipt_civix_civicrm_entityTypes($entityTypes);
 }
+
+/**
+ * Implements hook_civicrm_links().
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_links
+ */
+function printcontributionreceipt_civicrm_links($op, $objectName, $objectId, &$links, &$mask, &$values) {
+  if ('contribution.selector.row' == $op
+    && $objectName == 'Contribution'
+  ) {
+    $links[] = [
+      'name' => 'Download Receipt',
+      'url' => 'civicrm/contribution/downloadreceipt',
+      'qs' => 'reset=1&id=%%id%%',
+      'title' => ts('Download Receipt'),
+      'ref' => 'no-popup',
+    ];
+  }
+}
+
+/**
+ * Implements hook_civicrm_buildForm().
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_buildForm
+ */
+function printcontributionreceipt_civicrm_buildForm($formName, &$form) {
+  if ('CRM_Contribute_Form_ContributionView' == $formName) {
+    CRM_Core_Region::instance('page-body')->add([
+      'template' => 'CRM/PrintContributionReceipt/Form/ContributionViewExtra.tpl',
+    ]);
+  }
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/contribution/downloadreceipt</path>
+    <page_callback>CRM_PrintContributionReceipt_Utils::downloadReceipt</page_callback>
+    <title>Download Receipt</title>
+    <access_callback>CRM_Core_Permission::checkDownloadInvoice</access_callback>
+    <page_type>1</page_type>
+    <weight>620</weight>
+    <component>CiviContribute</component>
+  </item>
+</menu>
